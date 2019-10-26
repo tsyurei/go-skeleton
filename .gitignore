@@ -16,3 +16,4 @@
 .history/**
 config.yaml
 .vscode/**
+go-skeleton
