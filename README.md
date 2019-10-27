@@ -9,4 +9,8 @@ Base template that will be used for developing go web apps
 
 ## Run project
 
-1. ./go-skeleton serve
+1. run `./go-skeleton serve`
+
+## Logging
+
+currently log file is created on project root with name `skeleton.go`
