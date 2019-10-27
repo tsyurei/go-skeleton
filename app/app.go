@@ -60,7 +60,7 @@ func (app *App) Handler(f func(*action.Context, http.ResponseWriter, *http.Reque
 
 		ctx := app.NewContext().WithRemoteAddress(app.IPAddressForRequest(r))
 		ctx.AppConfig = app.Config
-		ctx = ctx.WithLogger(ctx.Logger.WithField("request_id", util.GenerateRandomString(32)))
+		ctx = ctx.WithLogger(logrus.WithFields(logrus.Fields{ "request_id": util.GenerateRandomString(32) }))
 
 		defer func() {
 			statusCode := w.(*statusCodeRecorder).StatusCode

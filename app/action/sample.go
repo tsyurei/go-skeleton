@@ -10,7 +10,10 @@ type SampleAction struct {
 
 }
 
-var Sample SampleAction
+var Sample *SampleAction
+func init() {
+	Sample = &SampleAction{}
+}
 
 func (self *SampleAction) SayHello(ctx *Context, w http.ResponseWriter, r *http.Request) error {
 	fmt.Println(sample.Repo.Test())

@@ -1,6 +1,8 @@
 package action
 
 import (
+	"fmt"
+	"time"
 	"github.com/sirupsen/logrus"
 
 	"go-skeleton/conf"
@@ -12,14 +14,16 @@ type Context struct {
 	AppConfig     *conf.Config
 }
 
+func init() {
+	fmt.Println(time.Now())
+}
+
 func (ctx *Context) WithLogger(logger logrus.FieldLogger) *Context {
-	ret := *ctx
-	ret.Logger = logger
-	return &ret
+	ctx.Logger = logger
+	return ctx
 }
 
 func (ctx *Context) WithRemoteAddress(address string) *Context {
-	ret := *ctx
-	ret.RemoteAddress = address
-	return &ret
+	ctx.RemoteAddress = address
+	return ctx
 }

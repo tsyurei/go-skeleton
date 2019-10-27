@@ -32,6 +32,14 @@ func serveAPP(ctx context.Context, app *app.App) {
 
 	app.InitRouter(router)
 
+	logFile, err := os.OpenFile("skeleton.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer logFile.Close()
+	logrus.SetOutput(logFile)
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+
 	server := &http.Server{
 		Addr:        fmt.Sprintf(":%v", app.Config.Port),
 		Handler:     cors(router),
