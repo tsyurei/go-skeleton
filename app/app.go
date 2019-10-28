@@ -8,14 +8,17 @@ import (
 	"time"
 
 	"go-skeleton/app/action"
+	"go-skeleton/app/repo"
 	"go-skeleton/conf"
 	"go-skeleton/util"
 
+	"github.com/go-pg/pg"
 	"github.com/sirupsen/logrus"
 )
 
 type App struct {
-	Config *conf.Config
+	Config   *conf.Config
+	Database *pg.DB
 }
 
 func (a *App) NewContext() *action.Context {
@@ -31,7 +34,17 @@ func New() (app *App, err error) {
 		return nil, err
 	}
 
+	app.Database = InitDatabase()
+	injectRepoWithDatabaseSess(app.Database, repo.UserRepo)
+	repo.UserRepo.GetAll()
+
 	return app, err
+}
+
+func injectRepoWithDatabaseSess(sess *pg.DB, repos ...repo.BaseRepo) {
+	for _, repo := range repos {
+		repo.Inject(sess)
+	}
 }
 
 type statusCodeRecorder struct {
@@ -60,7 +73,7 @@ func (app *App) Handler(f func(*action.Context, http.ResponseWriter, *http.Reque
 
 		ctx := app.NewContext().WithRemoteAddress(app.IPAddressForRequest(r))
 		ctx.AppConfig = app.Config
-		ctx = ctx.WithLogger(logrus.WithFields(logrus.Fields{ "request_id": util.GenerateRandomString(32) }))
+		ctx = ctx.WithLogger(logrus.WithFields(logrus.Fields{"request_id": util.GenerateRandomString(32)}))
 
 		defer func() {
 			statusCode := w.(*statusCodeRecorder).StatusCode

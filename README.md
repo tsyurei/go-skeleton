@@ -4,7 +4,7 @@ Base template that will be used for developing go web apps
 
 ## Project Structure
 
-<pre> 
+<pre>
   |── app            // Application main folder
   │   ├── action     // Application Main Controller
   │   │   └── api    // Application API Controller
@@ -17,9 +17,9 @@ Base template that will be used for developing go web apps
   └── util           // General Function
 </pre>
 
-## Build project 
+## Build project
 
-1. Create a copy of *.sample file and rename the newly copied to without *.sample 
+1. Create a copy of *.sample file and rename the newly copied to without *.sample
 2. run `go build`
 
 ## Run project
