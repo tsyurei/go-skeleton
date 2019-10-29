@@ -10,7 +10,6 @@ Base template that will be used for developing go web apps
   │   │   └── api    // Application API Controller
   │   ├── entity     // Application Entity
   │   ├── repo       // Application DAO
-  │   │   └── sample // Specific Application DAO
   │   └── service    // Application Business Logic
   ├── cmd            // Application commandline command
   ├── conf           // Application Main Configuration
