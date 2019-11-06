@@ -1,6 +1,6 @@
 package repo
 
-import "github.com/go-pg/pg"
+import "github.com/go-pg/pg/v9"
 
 type SampleRepoImpl struct {
 	sess *pg.DB

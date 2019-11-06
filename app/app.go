@@ -12,7 +12,7 @@ import (
 	"go-skeleton/conf"
 	"go-skeleton/util"
 
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v9"
 	"github.com/sirupsen/logrus"
 )
 

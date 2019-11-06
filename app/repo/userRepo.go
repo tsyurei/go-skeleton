@@ -1,10 +1,9 @@
 package repo
 
 import (
-	"fmt"
 	"go-skeleton/app/entity"
 
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v9"
 )
 
 type UserRepoImpl struct {
@@ -22,7 +21,6 @@ func (repo *UserRepoImpl) Inject(sess *pg.DB) {
 }
 
 func (repo *UserRepoImpl) GetAll() {
-	var users = &entity.User{}
-	repo.sess.Query(users, "select id, email, hashed_password from public.user")
-	fmt.Println(users)
+	var user = entity.User{}
+	repo.sess.Query(&user, "select id, email, hashed_password from public.user")
 }
