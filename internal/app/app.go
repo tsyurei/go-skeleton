@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"go-skeleton/app/action"
-	"go-skeleton/app/repo"
-	"go-skeleton/conf"
-	"go-skeleton/util"
+	conf "go-skeleton/config"
+	"go-skeleton/internal/app/action"
+	"go-skeleton/internal/app/repo"
+	"go-skeleton/internal/util"
 
 	"github.com/go-pg/pg/v9"
 	"github.com/sirupsen/logrus"

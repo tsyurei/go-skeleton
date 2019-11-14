@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"go-skeleton/app"
+	"go-skeleton/internal/app"
 	"os"
 	"path/filepath"
 
@@ -31,7 +31,7 @@ var migrateCmd = &cobra.Command{
 		ex, _ := os.Executable()
 		exPath := filepath.Dir(ex)
 
-		m, err := migrate.New("file://"+exPath+"/migration", app.GetDbURL())
+		m, err := migrate.New("file://"+exPath+"/internal/migration", app.GetDbURL())
 		if err != nil {
 			fmt.Println(err)
 		}

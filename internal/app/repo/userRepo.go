@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"go-skeleton/app/entity"
+	"go-skeleton/internal/app/entity"
 
 	"github.com/go-pg/pg/v9"
 )

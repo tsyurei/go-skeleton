@@ -5,7 +5,7 @@ import (
 	"time"
 	"github.com/sirupsen/logrus"
 
-	"go-skeleton/conf"
+	"go-skeleton/config"
 )
 
 type Context struct {

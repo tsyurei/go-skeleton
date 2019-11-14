@@ -1,5 +1,7 @@
 port: 9000
 secretKey: zS_KYiTvYuAG_NzxjtjMFRv64WVpZ-s8qgKIV1uxpZg=
+path:
+  migration:
 database:
   port: 5432
   host: localhost

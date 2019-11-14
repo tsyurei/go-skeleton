@@ -3,8 +3,8 @@ package app
 import (
 	"github.com/gorilla/mux"
 
-	"go-skeleton/app/action"
-	"go-skeleton/app/action/api"
+	"go-skeleton/internal/app/action"
+	"go-skeleton/internal/app/action/api"
 )
 
 func (app *App) InitRouter(r *mux.Router) {

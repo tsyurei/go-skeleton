@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"go-skeleton/app/action"
+	"go-skeleton/internal/app/action"
 )
 
 type HelloAction struct {

@@ -1,8 +1,8 @@
 package util
 
 import (
-	"encoding/base64"
 	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 )
 
