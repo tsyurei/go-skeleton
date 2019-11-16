@@ -8,3 +8,5 @@ database:
   user: postgres
   password: <password>
   database: <dbName>
+
+git@pgithub:tsyurei/HWK.git
