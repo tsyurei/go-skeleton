@@ -29,9 +29,11 @@ Base template that will be used for developing go web apps
 
 currently log file is created on project root with name `skeleton.go`
 
-## Migration 
+## Migration
 
-Migration will have 3 command to migrate database `--up`, `--down` `--step <number>`
+Migration will have 4 command to migrate database `--up`, `--down`, `--step=<number>`, `--force=<number>`
+
 * --up will migrate all database to the latest version
 * --down will migrate down database to the very first one **be careful**
-* --step <n>, if n > 0 then it will migrate up by n number, if n < 0 then it will migrate down by n number
+* --step=<n>, if n > 0 then it will migrate up by n number, if n < 0 then it will migrate down by n number
+* --force=<n>, sometimes if migration script fails then you will need to run `--force=<previous version>` then run `--up` again

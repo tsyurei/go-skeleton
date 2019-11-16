@@ -19,6 +19,7 @@ func init() {
 	migrateCmd.Flags().Bool("up", false, "migrate database up")
 	migrateCmd.Flags().Bool("down", false, "migrate database down")
 	migrateCmd.Flags().Int("step", 0, "determine how many step migration will takes")
+	migrateCmd.Flags().Int("force", 0, "force migration to a certain version")
 }
 
 var migrateCmd = &cobra.Command{
@@ -28,6 +29,8 @@ var migrateCmd = &cobra.Command{
 		up, _ := cmd.Flags().GetBool("up")
 		down, _ := cmd.Flags().GetBool("down")
 		step, _ := cmd.Flags().GetInt("step")
+		force, _ := cmd.Flags().GetInt("force")
+
 		ex, _ := os.Executable()
 		exPath := filepath.Dir(ex)
 
@@ -38,6 +41,10 @@ var migrateCmd = &cobra.Command{
 
 		if step != 0 {
 			if err := m.Steps(step); err != nil {
+				fmt.Println(err)
+			}
+		} else if force != 0 {
+			if err := m.Force(force); err != nil {
 				fmt.Println(err)
 			}
 		} else if up {
