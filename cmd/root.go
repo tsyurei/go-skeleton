@@ -3,6 +3,9 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -26,19 +29,24 @@ func Execute() {
 var configFile string
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	cobra.OnInitialize(InitConfig)
 
 	rootCmd.PersistentFlags().StringVar(&configFile, "config", "", "Config File (Default Config File is config.yaml)")
 }
 
-func initConfig() {
+func InitConfig() {
 	viper.SetConfigType("yaml")
 
 	if configFile != "" {
 		viper.SetConfigFile(configFile)
 	} else {
 		viper.SetConfigName("config")
+		_, b, _, _ := runtime.Caller(0)
+		basepath := filepath.Dir(b)
+		ix := strings.LastIndex(basepath, "/");
+
 		viper.AddConfigPath(".")
+		viper.AddConfigPath(basepath[0:ix])
 	}
 
 	viper.AutomaticEnv()

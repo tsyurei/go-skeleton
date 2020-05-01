@@ -1,5 +1,13 @@
 port: 9000
+proxyCount: 1
 secretKey: zS_KYiTvYuAG_NzxjtjMFRv64WVpZ-s8qgKIV1uxpZg=
+refreshSecretKey: zS_KYiTvYuAG_NzxjtjMFRv64WVpZ-s8qgKIV1uxpZg=
+development: false
+debug:
+  showSQLQuery: false
+authentication:
+  tokenExpireMinute: 15
+  refreshTokenExpireMinute: 4320
 path:
   migration:
 database:
@@ -8,5 +16,3 @@ database:
   user: postgres
   password: <password>
   database: <dbName>
-
-git@pgithub:tsyurei/HWK.git

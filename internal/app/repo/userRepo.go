@@ -7,7 +7,7 @@ import (
 )
 
 type UserRepoImpl struct {
-	sess *pg.DB
+	baseRepo
 }
 
 var UserRepo *UserRepoImpl

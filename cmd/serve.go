@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/gorilla/handlers"
@@ -44,6 +45,8 @@ func serveAPP(ctx context.Context, app *app.App) {
 		Addr:        fmt.Sprintf(":%v", app.Config.Port),
 		Handler:     cors(router),
 		ReadTimeout: 10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
 	}
 
 	done := make(chan struct{})
@@ -75,7 +78,7 @@ var serveCmd = &cobra.Command{
 
 		go func() {
 			ch := make(chan os.Signal, 1)
-			signal.Notify(ch, os.Interrupt)
+			signal.Notify(ch, os.Interrupt, syscall.SIGTERM)
 			// this will wait until cancel signal is sent to the app
 			<-ch
 			logrus.Info("Signal received. shutting down...")

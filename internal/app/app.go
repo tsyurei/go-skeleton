@@ -12,7 +12,9 @@ import (
 	"go-skeleton/internal/app/repo"
 	"go-skeleton/internal/util"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/go-pg/pg/v9"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -102,14 +104,38 @@ func (app *App) Handler(f func(*action.Context, http.ResponseWriter, *http.Reque
 		w.Header().Set("Content-Type", "application/json")
 
 		if err := f(ctx, w, r); err != nil {
-			ctx.Logger.Error(err)
-			http.Error(w, "internal server error", http.StatusInternalServerError)
+			switch errorWrapper := errors.Cause(err).(type) {
+			case *util.UnauthorizedError, *jwt.ValidationError:
+				util.ErrorResponse(w, http.StatusUnauthorized, err)
+			case *util.ValidationError:
+				util.ErrorResponse(w, http.StatusBadRequest, errorWrapper)
+			case *util.BadRequestError:
+				util.ErrorResponse(w, http.StatusBadRequest, err)
+				ctx.Logger.Error(fmt.Sprintf("%+v", err))
+			default:
+				util.ErrorResponse(w, http.StatusInternalServerError, err)
+				ctx.Logger.Error(fmt.Sprintf("%+v", err))
+				ctx.Logger.Error("Original Error")
+				ctx.Logger.Error(fmt.Sprintf("%+v", errorWrapper))
+			}
 		}
 	})
 }
 
 func (app *App) IPAddressForRequest(r *http.Request) string {
 	addr := r.RemoteAddr
+
+	if conf.AppConfig.ProxyCount > 0 {
+		h := r.Header.Get("X-Forwarded-For")
+		if h != "" {
+			clients := strings.Split(h, ",")
+			if conf.AppConfig.ProxyCount > len(clients) {
+				addr = clients[0]
+			} else {
+				addr = clients[len(clients)-conf.AppConfig.ProxyCount]
+			}
+		}
+	}
 
 	return strings.Split(strings.TrimSpace(addr), ":")[0]
 }
